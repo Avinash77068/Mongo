@@ -5,12 +5,6 @@ const router = Router()
 
 
 
-router.post('/login', userLogin)
-
-
-
-
-
-router.post('/login', userLogin)
+router.post('/', userLogin)
 
 export default router

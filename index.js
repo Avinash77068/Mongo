@@ -8,6 +8,7 @@ import dbConnection from "./src/database/index.js";
 import employee from "./src/routes/employee.js"
 import user from "./src/routes/user.js"
 import authRouter from "./src/routes/auth.js"
+import router from "./src/routes/auth.js";
 configDotenv();
 // Middleware Connections
 app.use(cors());
@@ -24,6 +25,7 @@ app.get("/", async (req, res) => {
 app.use(`${api}employee`,employee)
 app.use(`${api}user`,user)
 app.use(`${api}auth`, authRouter)
+app.use(`${api}login`,router)
 // Connection
 const PORT = process.env.PORT || 5000;
 
