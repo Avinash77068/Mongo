@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 
 export const userLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
   if (!email) {
     return res
       .status(403)

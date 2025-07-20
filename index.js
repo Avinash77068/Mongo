@@ -2,7 +2,6 @@
 import express from "express";
 const app = express();
 import cors from "cors";
-import { default as mongoose } from "mongoose";
 import { configDotenv } from "dotenv";
 import dbConnection from "./src/database/index.js";
 import employee from "./src/routes/employee.js"
@@ -24,8 +23,11 @@ app.get("/", async (req, res) => {
 
 app.use(`${api}employee`,employee)
 app.use(`${api}user`,user)
-app.use(`${api}auth`, authRouter)
-app.use(`${api}login`,router)
+// app.use(`${api}auth`, authRouter)
+app.use(`${api}login`,authRouter)
+app.use((req, res) => {
+  res.status(404).send({ message: "Not Found", path: req.path, method: req.method });
+});
 // Connection
 const PORT = process.env.PORT || 5000;
 
