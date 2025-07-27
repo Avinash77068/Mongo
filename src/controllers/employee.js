@@ -46,7 +46,6 @@ export const addEmployee = async (req, res) => {
       description,
     });
 
-    console.log(employee);
 
     return res.status(201).send({
       message: `User ${name} created successfully!`,
