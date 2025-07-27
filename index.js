@@ -7,7 +7,7 @@ import dbConnection from "./src/database/index.js";
 import employee from "./src/routes/employee.js"
 import user from "./src/routes/user.js"
 import authRouter from "./src/routes/auth.js"
-import router from "./src/routes/auth.js";
+
 configDotenv();
 // Middleware Connections
 app.use(cors());

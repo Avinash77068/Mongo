@@ -20,23 +20,45 @@ export const fetchUserById = asyncHandler(async (req, res) => {
   return res.send({ data: user, status: true });
 });
 
-// Add New User
+
 export const addUser = asyncHandler(async (req, res) => {
   const { username, email, password, category, bioMessage } = req.body;
-console.log( username,'usernmae', email,'email', password,'password', category,'catefgory', bioMessage,'data' )
-  // Validate input
+
+  console.log(username, 'username', email, 'email', password, 'password', category, 'category', bioMessage, 'bioMessage');
+
+  // 🔒 Input validation
   if (!username || !email || !password || !category) {
-    return res.status(400).send({ message: "All required fields must be provided!" });
+    return res.status(400).json({ message: "All required fields must be provided!" });
   }
 
-  const user = await User.create({ username, email, password, category, bioMessage });
+  // 🔍 Check for existing email
+  const emailExists = await User.findOne({ email });
+  if (emailExists) {
+    return res.status(409).json({ message: "Email is already registered. Please use another email." });
+  }
 
-  return res.status(201).send({
+  // 🔍 Check for existing username
+  const usernameExists = await User.findOne({ username });
+  if (usernameExists) {
+    return res.status(409).json({ message: "Username is already taken. Please choose another one." });
+  }
+
+  // ✅ Create new user
+  const user = await User.create({
+    username,
+    email,
+    password,
+    category,
+    bioMessage,
+  });
+
+  return res.status(201).json({
     message: `User ${username} created successfully!`,
     user,
     status: true,
   });
 });
+
 
 // Update User
 export const updateUser = asyncHandler(async (req, res) => {

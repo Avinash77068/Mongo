@@ -1,21 +1,21 @@
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
-import mongoose from "mongoose";
-
-
+dotenv.config(); // 👈 load .env values
 
 const dbConnection = async () => {
   try {
-    
-    const connect = await mongoose.connect(process.env.MONGO_DB_URI);
-
-    if (connect.STATES.connected) {
-      console.log("db conneciton successfull");
-      return true;
+    const uri = process.env.MONGO_DB_URI;
+    if (!uri) {
+      throw new Error("MONGO_DB_URI is not defined in .env");
     }
-    return false;
-  } catch (error) {
-    console.log("db error", error);
-    throw new Error(error);
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected successfully");
+  } catch (err) {
+    console.error("db error", err);
   }
 };
 
